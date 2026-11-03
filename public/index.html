@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIXEL SURVIVORS - Top-Down Roguelite Arena Survival</title>
+  <meta name="description" content="Pixel Survivors é um jogo estilo Vampire Survivors em pixel art clássica. Sobreviva a hordas implacáveis, desbloqueie magias devastadoras e forje builds lendárias.">
+  <meta name="theme-color" content="#0b0f19">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="PIXEL SURVIVORS - Roguelite Arena Survival">
+  <meta property="og:description" content="Sobreviva à horda retrô em pixel art. Jogue a demo gratuita direto no navegador!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/tela_inicial.jpeg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/wizard/south_walk_0.png">
+
+  <!-- Google Fonts: Pixel Fonts & Display Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="crt-active">
+
+  <!-- Scanlines CRT Overlay (Toggleable) -->
+  <div id="crt-overlay" class="crt-scanlines" aria-hidden="true"></div>
+
+  <!-- Background Animated Embers Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Top Announcement Bar -->
+  <aside class="announcement-bar">
+    <div class="announcement-content">
+      <span class="pixel-badge blink">NOVO</span>
+      <span>DEMO JOGÁVEL V0.9 DISPONÍVEL NO NAVEGADOR • SUPORTE A CLOUDFLARE WORKERS</span>
+      <a href="#demo-arena" class="announcement-link">JOGAR AGORA &rarr;</a>
+    </div>
+  </aside>
+
+  <!-- Navigation Header -->
+  <header class="main-header">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo">
+        <span class="logo-icon"><img src="assets/wizard/south_walk_0.png" alt="Mago Arcano" class="pixel-art-icon"></span>
+        <div class="logo-text">
+          <span class="logo-title">PIXEL SURVIVORS</span>
+          <span class="logo-sub">ROGÜELITE ARENA</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" id="main-nav">
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#demo-arena" class="nav-highlight">Demo Jogável</a></li>
+          <li><a href="#heroi">O Herói</a></li>
+          <li><a href="#bestiario">Bestiário</a></li>
+          <li><a href="#grimorio">Grimório</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+        </ul>
+      </nav>
+
+      <!-- Retro Utility Buttons -->
+      <div class="nav-actions">
+        <button id="toggle-crt-btn" class="pixel-btn btn-icon" title="Alternar Efeito CRT / Scanlines" aria-label="Toggle CRT">
+          <span class="btn-indicator on"></span>
+          <span>CRT</span>
+        </button>
+        <button id="toggle-sound-btn" class="pixel-btn btn-icon" title="Ligar/Desligar Áudio Chiptune" aria-label="Toggle Sound">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-text">SOM</span>
+        </button>
+        <a href="#demo-arena" class="pixel-btn btn-primary cta-nav">JOGAR DEMO</a>
+      </div>
+
+      <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span class="pixel-star">✦</span> Top-Down Roguelite Arena Survival <span class="pixel-star">✦</span>
+          </div>
+
+          <h1 class="hero-title">
+            SOBREVIVA À <br>
+            <span class="gradient-text glow">HORDA DAS TREVAS</span>
+          </h1>
+
+          <p class="hero-description">
+            Inspirado nos maiores clássicos do estilo <em>Vampire Survivors</em> com estética autêntica <strong>Pixel Art</strong>. 
+            Controle o Herói Mago, aniquile dezenas de milhares de monstros em tempo real, evolua seus feitiços e torne-se uma força incontrolável.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#demo-arena" class="pixel-btn btn-xl btn-primary pulse-btn">
+              <span class="btn-icon-pulse">⚔️</span> JOGAR DEMO NA ARENA
+            </a>
+            <a href="#heroi" class="pixel-btn btn-xl btn-secondary">
+              VER BESTIÁRIO & MAGIAS
+            </a>
+          </div>
+
+          <div class="hero-stats-strip">
+            <div class="stat-item">
+              <div class="stat-number">+10.000</div>
+              <div class="stat-label">Inimigos por Corrida</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Pixel Art Feita à Mão</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">30+</div>
+              <div class="stat-label">Sinergias de Magias</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Graphic / Interactive Character Card -->
+        <div class="hero-visual">
+          <div class="arcade-card-frame glow-cyan">
+            <div class="card-screen">
+              <div class="hero-sprite-stage">
+                <div class="magic-circle-bg"></div>
+                <img src="assets/wizard/Idle_walking-4-frames_south.gif" alt="Herói Mago Andando" class="hero-gif-sprite">
+              </div>
+
+              <div class="hero-card-info">
+                <span class="badge-tag">CLASSE ARCANISTA</span>
+                <h3 class="hero-name">Herói Mago</h3>
+                <p class="hero-short-desc">
+                  Mestre das forças cósmicas com disparo automático no alvo mais próximo.
+                </p>
+                <div class="controls-pill">
+                  <span class="key-cap">W</span><span class="key-cap">A</span><span class="key-cap">S</span><span class="key-cap">D</span>
+                  ou <span class="key-cap">▲</span><span class="key-cap">◀</span><span class="key-cap">▼</span><span class="key-cap">▶</span> para mover
+                </div>
+              </div>
+            </div>
+            <div class="frame-decorations">
+              <span class="corner-dot c-tl"></span>
+              <span class="corner-dot c-tr"></span>
+              <span class="corner-dot c-bl"></span>
+              <span class="corner-dot c-br"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORIGINAL TITLE SCREEN BANNER -->
+    <section class="banner-section" id="sobre">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">VISÃO ORIGINAL DO JOGO</span>
+          <h2 class="section-title">A TELA DE APRESENTAÇÃO</h2>
+          <p class="section-desc">
+            A visão central do projeto: um top-down survivor dinâmico com herói e inimigos com papéis táticos bem definidos.
+          </p>
+        </div>
+
+        <div class="showcase-box">
+          <div class="screen-wrapper">
+            <img src="assets/tela_inicial.jpeg" alt="Pixel Survivors - Tela Inicial" class="screen-img">
+          </div>
+          <div class="screen-caption">
+            <div class="caption-item">
+              <strong>Controles:</strong> WASD ou Setas direcionais
+            </div>
+            <div class="caption-separator">|</div>
+            <div class="caption-item">
+              <strong>Mecânica:</strong> Disparo Automático contra o inimigo mais próximo
+            </div>
+            <div class="caption-separator">|</div>
+            <div class="caption-item">
+              <strong>Objetivo:</strong> Colete gemas de EXP, suba de nível e sobreviva ao tempo limite
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLAYABLE MINI-GAME DEMO IN CANVAS -->
+    <section class="game-section" id="demo-arena">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle pulse-text">✦ EXPERIMENTE AGORA NO NAVEGADOR ✦</span>
+          <h2 class="section-title">ARENA SURVIVORS: DEMO AO VIVO</h2>
+          <p class="section-desc">
+            Sinta o combate roguelite em tempo real! Desvie dos slimes, antecipe os morcegos e não deixe o ogro azul encurralar você.
+          </p>
+        </div>
+
+        <!-- Arcade Machine Wrapper -->
+        <div class="arcade-cabinet">
+          <div class="arcade-header">
+            <div class="arcade-title-led">PIXEL SURVIVORS • ARENA SYSTEM</div>
+            <div class="arcade-lights">
+              <span class="led green blink-slow"></span>
+              <span class="led yellow"></span>
+              <span class="led red blink-fast"></span>
+            </div>
+          </div>
+
+          <div class="arcade-screen-container">
+            <!-- HUD Overlay in Game -->
+            <div class="game-hud-bar">
+              <div class="hud-item">
+                <span class="hud-label">HP</span>
+                <div class="hud-bar-container hp-bar-bg">
+                  <div id="game-hp-fill" class="hud-bar-fill hp-fill" style="width: 100%;"></div>
+                </div>
+                <span id="game-hp-text" class="hud-val">100/100</span>
+              </div>
+
+              <div class="hud-item">
+                <span class="hud-label">EXP</span>
+                <div class="hud-bar-container xp-bar-bg">
+                  <div id="game-xp-fill" class="hud-bar-fill xp-fill" style="width: 0%;"></div>
+                </div>
+                <span id="game-lvl-text" class="hud-val">LVL 1</span>
+              </div>
+
+              <div class="hud-metrics">
+                <div class="metric">
+                  <span class="metric-icon">⏱️</span>
+                  <span id="game-timer-text">00:00</span>
+                </div>
+                <div class="metric">
+                  <span class="metric-icon">💀</span>
+                  <span id="game-kills-text">0</span>
+                </div>
+                <div class="metric">
+                  <span class="metric-icon">💎</span>
+                  <span id="game-score-text">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Canvas -->
+            <canvas id="game-canvas" width="800" height="480"></canvas>
+
+            <!-- Game Overlay: Start Screen -->
+            <div id="game-start-overlay" class="game-overlay">
+              <div class="overlay-card">
+                <h3 class="overlay-title">PIXEL SURVIVORS</h3>
+                <p class="overlay-subtitle">Top-Down Roguelite Arena Survival</p>
+                
+                <div class="hero-preview-badge">
+                  <img src="assets/wizard/Idle_walking-4-frames_south.gif" alt="Herói Mago" class="preview-sprite">
+                  <div>
+                    <strong>Herói Mago</strong>
+                    <div class="small-sub">Disparo Mágico Automático Ativado</div>
+                  </div>
+                </div>
+
+                <div class="controls-guide">
+                  <div class="guide-row">
+                    <span class="key-pill">W A S D</span> ou <span class="key-pill">SETAS</span> para Mover
+                  </div>
+                  <div class="guide-row">
+                    <span class="key-pill">DISPARO</span> Automático no Inimigo Mais Próximo
+                  </div>
+                </div>
+
+                <button id="start-game-btn" class="pixel-btn btn-xl btn-primary start-button">
+                  ▶ INICIAR PARTIDA
+                </button>
+              </div>
+            </div>
+
+            <!-- Game Overlay: Level Up Modal -->
+            <div id="game-levelup-overlay" class="game-overlay hidden">
+              <div class="overlay-card levelup-card">
+                <div class="levelup-header">
+                  <span class="pixel-star-big">★</span>
+                  <h3>NÍVEL SUPERADO!</h3>
+                  <p>Escolha um aprimoramento para o seu grimório:</p>
+                </div>
+
+                <div class="upgrades-grid" id="upgrades-container">
+                  <!-- Generated dynamically via game.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Game Overlay: Game Over Screen -->
+            <div id="game-over-overlay" class="game-overlay hidden">
+              <div class="overlay-card gameover-card">
+                <h3 class="gameover-title">VOCÊ FOI DERROTADO!</h3>
+                <p>A escuridão prevaleceu desta vez...</p>
+
+                <div class="endgame-stats">
+                  <div class="end-stat">
+                    <span>Tempo Sobrevivido:</span>
+                    <strong id="end-time">00:00</strong>
+                  </div>
+                  <div class="end-stat">
+                    <span>Inimigos Derrotados:</span>
+                    <strong id="end-kills">0</strong>
+                  </div>
+                  <div class="end-stat">
+                    <span>Nível Alcançado:</span>
+                    <strong id="end-level">1</strong>
+                  </div>
+                  <div class="end-stat">
+                    <span>Gemas Coletadas:</span>
+                    <strong id="end-gems">0</strong>
+                  </div>
+                </div>
+
+                <button id="restart-game-btn" class="pixel-btn btn-xl btn-primary">
+                  🔄 TENTAR NOVAMENTE
+                </button>
+              </div>
+            </div>
+
+            <!-- Mobile Touch Controls (shown on touch devices) -->
+            <div id="mobile-controls" class="mobile-controls-panel hidden">
+              <div id="virtual-dpad" class="dpad-grid">
+                <button class="dpad-btn up" data-key="ArrowUp">▲</button>
+                <button class="dpad-btn left" data-key="ArrowLeft">◀</button>
+                <button class="dpad-btn center">●</button>
+                <button class="dpad-btn right" data-key="ArrowRight">▶</button>
+                <button class="dpad-btn down" data-key="ArrowDown">▼</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Arcade Controls Bar -->
+          <div class="arcade-footer">
+            <div class="footer-tip">
+              <span class="tip-icon">💡</span>
+              <span>Colete as gemas verdes e azuis no chão para subir de nível e ganhar feitiços!</span>
+            </div>
+            <div class="arcade-actions">
+              <button id="pause-game-btn" class="pixel-btn btn-small">PAUSAR (P)</button>
+              <button id="fullscreen-game-btn" class="pixel-btn btn-small">TELA CHEIA</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARACTER SPOTLIGHT: HERÓI MAGO -->
+    <section class="character-section" id="heroi">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">O PROTAGONISTA</span>
+          <h2 class="section-title">HERÓI MAGO ARCANO</h2>
+          <p class="section-desc">
+            Um conjurador veloz equipado com chapéu pontudo clássico, cajado rúnico com orbe cristalino e vestes estelares.
+          </p>
+        </div>
+
+        <div class="character-grid">
+          <!-- 360-degree Interactive Rotation Viewer -->
+          <div class="character-viewer-box">
+            <div class="viewer-header">
+              <span class="viewer-title">VISUALIZADOR 3D / 8 DIREÇÕES</span>
+              <span class="viewer-dir-label" id="current-direction-text">Direção: Sul (South)</span>
+            </div>
+
+            <div class="viewer-display">
+              <div class="pedestal"></div>
+              <img id="wizard-rotate-img" src="assets/wizard/rotations/south.png" alt="Herói Mago - Rotação" class="rotatable-sprite">
+            </div>
+
+            <div class="viewer-controls">
+              <p class="compass-tip">Clique nos ângulos para inspecionar o sprite em 8 direções:</p>
+              <div class="compass-wheel">
+                <button class="dir-btn" data-dir="north">N</button>
+                <button class="dir-btn" data-dir="north-east">NE</button>
+                <button class="dir-btn" data-dir="east">L</button>
+                <button class="dir-btn" data-dir="south-east">SE</button>
+                <button class="dir-btn active" data-dir="south">S</button>
+                <button class="dir-btn" data-dir="south-west">SO</button>
+                <button class="dir-btn" data-dir="west">O</button>
+                <button class="dir-btn" data-dir="north-west">NO</button>
+              </div>
+              <button id="toggle-spin-animation" class="pixel-btn btn-small mt-2">
+                🔄 ROTAÇÃO AUTOMÁTICA
+              </button>
+            </div>
+          </div>
+
+          <!-- Character Details & Stats -->
+          <div class="character-details-box">
+            <div class="badge-role">CLASSE CONJURADOR</div>
+            <h3 class="character-fullname">Astralis, o Mago das Estrelas</h3>
+            <p class="character-bio">
+              "Vestindo um chapéu de abas largas pontiagudo e um longo manto com bordados estelares, ele empunha um cajado de madeira coroado por um orbe de cristal pulsante, pronto para dizimar qualquer exército espectral que ouse cruzar seu caminho."
+            </p>
+
+            <div class="stats-bars-container">
+              <div class="stat-bar-row">
+                <div class="stat-meta">
+                  <span>Vida Máxima (HP)</span>
+                  <strong>100 pts</strong>
+                </div>
+                <div class="stat-track">
+                  <div class="stat-progression" style="width: 70%; background: #22c55e;"></div>
+                </div>
+              </div>
+
+              <div class="stat-bar-row">
+                <div class="stat-meta">
+                  <span>Poder Mágico / Dano Base</span>
+                  <strong>25 dmg (+15%)</strong>
+                </div>
+                <div class="stat-track">
+                  <div class="stat-progression" style="width: 85%; background: #38bdf8;"></div>
+                </div>
+              </div>
+
+              <div class="stat-bar-row">
+                <div class="stat-meta">
+                  <span>Velocidade de Movimento</span>
+                  <strong>160 px/s</strong>
+                </div>
+                <div class="stat-track">
+                  <div class="stat-progression" style="width: 75%; background: #facc15;"></div>
+                </div>
+              </div>
+
+              <div class="stat-bar-row">
+                <div class="stat-meta">
+                  <span>Raio de Atração de Gemas</span>
+                  <strong>90 px (Magnetismo)</strong>
+                </div>
+                <div class="stat-track">
+                  <div class="stat-progression" style="width: 90%; background: #a855f7;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="passive-skill-card">
+              <div class="passive-icon">✨</div>
+              <div class="passive-content">
+                <strong>Habilidade Passiva: Disparo Astral Automático</strong>
+                <p>Canaliza esferas mágicas teleguiadas em intervalos constantes na direção da ameaça mais iminente sem necessidade de mirar manualmente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BESTIARY / MONSTER CARDS -->
+    <section class="bestiary-section" id="bestiario">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">AMEAÇAS DA ARENA</span>
+          <h2 class="section-title">O BESTIÁRIO DOS MONSTROS</h2>
+          <p class="section-desc">
+            Cada criatura possui padrões de movimento e pontos fortes únicos. Conheça seus inimigos antes de entrar na arena.
+          </p>
+        </div>
+
+        <div class="bestiary-cards-grid">
+          <!-- Monster 1: Slime Verde -->
+          <div class="monster-card border-green">
+            <div class="monster-card-top">
+              <div class="threat-badge threat-low">PERIGO: BAIXO</div>
+              <div class="monster-type">ENXAME TERRESTRE</div>
+            </div>
+
+            <div class="monster-art-frame">
+              <img src="assets/enemies/slime.png" alt="Slime Verde" class="monster-sprite scale-pixel">
+            </div>
+
+            <div class="monster-info">
+              <h3 class="monster-name green-text">Slime Verde (Comum)</h3>
+              <p class="monster-desc">
+                Massas gelatinosas que surgem das fendas da masmorra. Individualmente frágeis, mas letais quando cercam o conjurador em hordas compactas.
+              </p>
+
+              <ul class="monster-specs">
+                <li><span>HP:</span> <strong>30 (Baixo)</strong></li>
+                <li><span>Velocidade:</span> <strong>Moderada (60 px/s)</strong></li>
+                <li><span>Drop Especial:</span> <strong>Gema Verde (+10 EXP)</strong></li>
+                <li><span>Estratégia:</span> <strong>Mantenha distância e use feitiços de área</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Monster 2: Morcego Veloz -->
+          <div class="monster-card border-red">
+            <div class="monster-card-top">
+              <div class="threat-badge threat-medium">PERIGO: MÉDIO</div>
+              <div class="monster-type">AÉREO VELOZ</div>
+            </div>
+
+            <div class="monster-art-frame">
+              <img src="assets/enemies/morcego.png" alt="Morcego Veloz" class="monster-sprite scale-pixel">
+            </div>
+
+            <div class="monster-info">
+              <h3 class="monster-name red-text">Morcego (Veloz)</h3>
+              <p class="monster-desc">
+                Criaturas sombrias aladas que rasgam o ar com velocidade fulminante. Desviam de ataques lentos e mergulham direto contra o herói.
+              </p>
+
+              <ul class="monster-specs">
+                <li><span>HP:</span> <strong>20 (Frágil)</strong></li>
+                <li><span>Velocidade:</span> <strong>Extrema (130 px/s)</strong></li>
+                <li><span>Drop Especial:</span> <strong>Gema Azul (+25 EXP)</strong></li>
+                <li><span>Estratégia:</span> <strong>Dispare orbes rápidos antes que eles decolem</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Monster 3: Ogro Azul -->
+          <div class="monster-card border-blue">
+            <div class="monster-card-top">
+              <div class="threat-badge threat-high">PERIGO: ALTO</div>
+              <div class="monster-type">COLOSSO TANQUE</div>
+            </div>
+
+            <div class="monster-art-frame">
+              <img src="assets/enemies/ogro.png" alt="Ogro Azul Tanque" class="monster-sprite scale-pixel">
+            </div>
+
+            <div class="monster-info">
+              <h3 class="monster-name blue-text">Ogro Azul (Tanque)</h3>
+              <p class="monster-desc">
+                Um gigante blindado com passos pesados e resistência extraordinária. Atua como escudo vivo para as hordas menores.
+              </p>
+
+              <ul class="monster-specs">
+                <li><span>HP:</span> <strong>180 (Muito Alto)</strong></li>
+                <li><span>Velocidade:</span> <strong>Lenta (40 px/s)</strong></li>
+                <li><span>Drop Especial:</span> <strong>Gema Dourada (+80 EXP)</strong></li>
+                <li><span>Estratégia:</span> <strong>Faça kiting circular contínuo e concentre dano</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPELLS & GRIMOIRE SECTION -->
+    <section class="spells-section" id="grimorio">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">ARSENAL DE MAGIAS</span>
+          <h2 class="section-title">GRIMÓRIO & SINERGIAS</h2>
+          <p class="section-desc">
+            Combine feitiços primários com relíquias passivas para liberar formas evoluídas supremas.
+          </p>
+        </div>
+
+        <div class="spells-grid">
+          <!-- Spell 1 -->
+          <div class="spell-card">
+            <div class="spell-icon-box cyan-glow">🔮</div>
+            <div class="spell-content">
+              <h4>Orbe Arcano Estelar</h4>
+              <p>Dispara rajadas mágicas que buscam os inimigos mais perigosos e perfuram armaduras.</p>
+              <span class="spell-tag">Arma Primária</span>
+            </div>
+          </div>
+
+          <!-- Spell 2 -->
+          <div class="spell-card">
+            <div class="spell-icon-box orange-glow">🔥</div>
+            <div class="spell-content">
+              <h4>Anel de Fogo Giratório</h4>
+              <p>Invoca orbes flamejantes em órbita contínua que queimam tudo o que se aproxima do mago.</p>
+              <span class="spell-tag">Dano em Área</span>
+            </div>
+          </div>
+
+          <!-- Spell 3 -->
+          <div class="spell-card">
+            <div class="spell-icon-box ice-glow">❄️</div>
+            <div class="spell-content">
+              <h4>Nevasca da Meia-Noite</h4>
+              <p>Congela temporariamente as hordas inimigas e diminui a velocidade de morcegos e ogros.</p>
+              <span class="spell-tag">Controle de Grupo</span>
+            </div>
+          </div>
+
+          <!-- Spell 4 -->
+          <div class="spell-card">
+            <div class="spell-icon-box purple-glow">⚡</div>
+            <div class="spell-content">
+              <h4>Relâmpago em Cadeia</h4>
+              <p>Descargas de alta voltagem que saltam entre múltiplos inimigos simultaneamente.</p>
+              <span class="spell-tag">Eliminação de Enxames</span>
+            </div>
+          </div>
+
+          <!-- Spell 5 -->
+          <div class="spell-card">
+            <div class="spell-icon-box green-glow">🧲</div>
+            <div class="spell-content">
+              <h4>Ímã Espectral de Almas</h4>
+              <p>Aumenta progressivamente o alcance de coleta de gemas de EXP caídas no campo.</p>
+              <span class="spell-tag">Item Passivo</span>
+            </div>
+          </div>
+
+          <!-- Spell 6 -->
+          <div class="spell-card">
+            <div class="spell-icon-box gold-glow">👑</div>
+            <div class="spell-content">
+              <h4>Evolução Suprema: Singularidade</h4>
+              <p>Feitiço final desbloqueado ao maximizar Orbe Arcano + Ímã de Almas no nível máximo.</p>
+              <span class="spell-tag evolution">Fusão de Feitiço</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME FEATURES -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">PILHARES DO GAMEPLAY</span>
+          <h2 class="section-title">POR QUE VOCÊ VAI AMAR MORRER 100 VEZES</h2>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-box">
+            <div class="feature-icon">🎮</div>
+            <h3>Controles Intuitivos</h3>
+            <p>Mova-se com uma mão e foque no posicionamento tático enquanto suas magias atacam sozinhas.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">⏱️</div>
+            <h3>Partidas Rápidas e Viciantes</h3>
+            <p>Corridas de 10 a 20 minutos repletas de adrenalina, ideais para jogatinas rápidas ou maratonas.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">📈</div>
+            <h3>Meta-Progressão Permanente</h3>
+            <p>Mesmo na derrota, suas moedas são salvas para comprar melhorias permanentes na taverna do jogo.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon">⚡</div>
+            <h3>Desempenho Extremo na Nuvem</h3>
+            <p>Otimizado com Cloudflare Workers para carregamento ultra-rápido em servidores de borda globais.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP & NEWSLETTER -->
+    <section class="roadmap-section" id="roadmap">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">O FUTURO DO PROJETO</span>
+          <h2 class="section-title">ROADMAP DE DESENVOLVIMENTO</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-step done">
+            <div class="step-marker">✓</div>
+            <div class="step-card">
+              <span class="step-phase">FASE 1 (CONCLUÍDO)</span>
+              <h4>Protótipo de Combate & Demo Web</h4>
+              <p>Mecânica de arena, Herói Mago animado, inimigos básicos (Slime, Morcego, Ogro) e deploy no Cloudflare Workers.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step current">
+            <div class="step-marker">★</div>
+            <div class="step-card">
+              <span class="step-phase">FASE 2 (EM DESENVOLVIMENTO)</span>
+              <h4>Novas Classes & Chefes Épicos</h4>
+              <p>Cavaleiro Protetor, Ladina das Adagas, chefe "Rei Esqueleto" e novo mapa de Catacumbas Subterrâneas.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step future">
+            <div class="step-marker">3</div>
+            <div class="step-card">
+              <span class="step-phase">FASE 3 (PREVISTO)</span>
+              <h4>Árvore de Talentos & Conquistas</h4>
+              <p>Mais de 50 feitiços combinados, sistema de relíquias divinas e desafios diários com rankings globais.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step future">
+            <div class="step-marker">4</div>
+            <div class="step-card">
+              <span class="step-phase">FASE 4 (FINAL)</span>
+              <h4>Lançamento Steam & Itch.io</h4>
+              <p>Suporte completo a gamepads, trilha sonora chiptune original em vinil digital e conquistas Steam.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newsletter / Beta Sign Up Box -->
+        <div class="newsletter-box mt-5">
+          <div class="newsletter-content">
+            <h3 class="newsletter-title">QUER JOGAR OS NOVOS MAPAS ANTES DE TODO MUNDO?</h3>
+            <p>Inscreva seu e-mail para receber acesso prioritário aos testes alfa fechados e recompensas exclusivas.</p>
+            
+            <form id="newsletter-form" class="newsletter-form">
+              <input type="email" id="newsletter-email" placeholder="Digite seu melhor e-mail..." required class="pixel-input">
+              <button type="submit" class="pixel-btn btn-primary">
+                INSCREVER-SE
+              </button>
+            </form>
+            <div id="newsletter-status" class="newsletter-status"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RETRO FOOTER -->
+  <footer class="main-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/wizard/south_walk_0.png" alt="Mago" class="pixel-art-icon-small">
+          <span>PIXEL SURVIVORS</span>
+        </div>
+        <p class="footer-tagline">
+          Um tributo apaixonado aos jogos de sobrevivência em horda no estilo clássico dos fliperamas dos anos 90.
+        </p>
+      </div>
+
+      <div class="footer-links-group">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#hero">Início</a></li>
+          <li><a href="#demo-arena">Demo no Navegador</a></li>
+          <li><a href="#heroi">O Herói Mago</a></li>
+          <li><a href="#bestiario">Bestiário</a></li>
+          <li><a href="#grimorio">Grimório de Magias</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h4>Tecnologia</h4>
+        <ul>
+          <li><a href="https://workers.cloudflare.com/" target="_blank" rel="noopener">Cloudflare Workers</a></li>
+          <li><span>HTML5 Canvas 60 FPS</span></li>
+          <li><span>Web Audio Chiptune API</span></li>
+          <li><span>Pixel Art Handcrafted</span></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h4>Comunidade</h4>
+        <div class="social-links">
+          <a href="#" class="social-btn" title="Discord">💬 Discord</a>
+          <a href="#" class="social-btn" title="Steam">🎮 Steam</a>
+          <a href="#" class="social-btn" title="GitHub">📦 GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container bottom-flex">
+        <p>&copy; 2026 Pixel Survivors. Todos os direitos reservados. Feito com pixels e magia arcana.</p>
+        <div class="footer-extra-toggles">
+          <button id="footer-crt-toggle" class="link-btn">CRT Scanlines: <span id="footer-crt-status">Ligado</span></button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="game.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

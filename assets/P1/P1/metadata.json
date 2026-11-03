@@ -1,0 +1,36 @@
+{
+  "group_id": "d9bb9127-3a96-479b-b4c0-6c2e5a77455e",
+  "states": [
+    {
+      "character": {
+        "id": "aa2697ba-6a99-4a80-8e8c-ef4b2cd65639",
+        "name": "Idle",
+        "prompt": "A wizard wearing a wide-brimmed pointed hat and a long flowing robe with star-patterned embroidery, holding a wooden staff topped with a glowing crystal orb, standing in a confident, ready-to-cast pose, black outline.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "low top-down",
+        "created_at": "2026-11-03T21:05:45.351953+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "south-east": "Idle/rotations/south-east.png",
+          "east": "Idle/rotations/east.png",
+          "north-east": "Idle/rotations/north-east.png",
+          "north": "Idle/rotations/north.png",
+          "north-west": "Idle/rotations/north-west.png",
+          "west": "Idle/rotations/west.png",
+          "south-west": "Idle/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-11-03T21:08:40.119844"
+}

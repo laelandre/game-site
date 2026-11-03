@@ -1,0 +1,26 @@
+{
+  "name": "pixel-survivors",
+  "version": "1.0.0",
+  "description": "Pixel Survivors - Vampire Survivors style roguelite game landing page and playable demo running on Cloudflare Workers",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev",
+    "preview": "wrangler pages dev public"
+  },
+  "keywords": [
+    "vampire-survivors",
+    "pixel-art",
+    "cloudflare-workers",
+    "html5-game",
+    "roguelite",
+    "arena-survival"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.100.0"
+  }
+}
