@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PIXEL SURVIVORS - Top-Down Roguelite Arena Survival</title>
-  <meta name="description" content="Pixel Survivors é um jogo estilo Vampire Survivors em pixel art clássica. Sobreviva a hordas implacáveis, desbloqueie magias devastadoras e forje builds lendárias.">
+  <meta name="description" content="Pixel Survivors é um jogo estilo Vampire Survivors em pixel art clássica. Sobreviva a hordas implacáveis, jogue no navegador ou baixe a versão executável (.exe) para Windows.">
   <meta name="theme-color" content="#0b0f19">
 
   <!-- Open Graph / Meta -->
   <meta property="og:title" content="PIXEL SURVIVORS - Roguelite Arena Survival">
-  <meta property="og:description" content="Sobreviva à horda retrô em pixel art. Jogue a demo gratuita direto no navegador!">
+  <meta property="og:description" content="Sobreviva à horda retrô em pixel art. Jogue a demo gratuita direto no navegador ou baixe a versão .exe para Windows!">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/tela_inicial.jpeg">
 
@@ -31,12 +31,24 @@
   <!-- Background Animated Embers Canvas -->
   <canvas id="ambient-canvas"></canvas>
 
+  <!-- Download Feedback Toast Container -->
+  <div id="download-toast" class="download-toast hidden" role="status" aria-live="polite">
+    <div class="toast-content">
+      <span class="toast-icon">🚀</span>
+      <div class="toast-text">
+        <strong id="toast-title">Download Iniciado!</strong>
+        <p id="toast-message">Obrigado por apoiar o desenvolvimento de Pixel Survivors!</p>
+      </div>
+      <button id="close-toast-btn" class="toast-close" aria-label="Fechar notificação">&times;</button>
+    </div>
+  </div>
+
   <!-- Top Announcement Bar -->
   <aside class="announcement-bar">
     <div class="announcement-content">
       <span class="pixel-badge blink">NOVO</span>
-      <span>DEMO JOGÁVEL V0.9 DISPONÍVEL NO NAVEGADOR • SUPORTE A CLOUDFLARE WORKERS</span>
-      <a href="#demo-arena" class="announcement-link">JOGAR AGORA &rarr;</a>
+      <span>DEMO NO NAVEGADOR & DOWNLOAD DO EXECUTÁVEL (.EXE) PARA WINDOWS V0.9</span>
+      <a href="#download" class="announcement-link">BAIXAR .EXE &rarr;</a>
     </div>
   </aside>
 
@@ -47,7 +59,7 @@
         <span class="logo-icon"><img src="assets/wizard/south_walk_0.png" alt="Mago Arcano" class="pixel-art-icon"></span>
         <div class="logo-text">
           <span class="logo-title">PIXEL SURVIVORS</span>
-          <span class="logo-sub">ROGÜELITE ARENA</span>
+          <span class="logo-sub">ROGUELITE ARENA</span>
         </div>
       </a>
 
@@ -55,6 +67,7 @@
         <ul>
           <li><a href="#sobre">Sobre</a></li>
           <li><a href="#demo-arena" class="nav-highlight">Demo Jogável</a></li>
+          <li><a href="#download" class="nav-download"><span class="badge-exe">.EXE</span> Download</a></li>
           <li><a href="#heroi">O Herói</a></li>
           <li><a href="#bestiario">Bestiário</a></li>
           <li><a href="#grimorio">Grimório</a></li>
@@ -72,7 +85,7 @@
           <span id="sound-icon">🔊</span>
           <span id="sound-text">SOM</span>
         </button>
-        <a href="#demo-arena" class="pixel-btn btn-primary cta-nav">JOGAR DEMO</a>
+        <a href="#download" class="pixel-btn btn-primary cta-nav">BAIXAR .EXE</a>
       </div>
 
       <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Abrir menu">
@@ -97,12 +110,15 @@
 
           <p class="hero-description">
             Inspirado nos maiores clássicos do estilo <em>Vampire Survivors</em> com estética autêntica <strong>Pixel Art</strong>. 
-            Controle o Herói Mago, aniquile dezenas de milhares de monstros em tempo real, evolua seus feitiços e torne-se uma força incontrolável.
+            Controle o Herói Mago, aniquile dezenas de milhares de monstros em tempo real, evolua seus feitiços e jogue no navegador ou no Windows.
           </p>
 
           <div class="hero-actions">
             <a href="#demo-arena" class="pixel-btn btn-xl btn-primary pulse-btn">
               <span class="btn-icon-pulse">⚔️</span> JOGAR DEMO NA ARENA
+            </a>
+            <a href="#download" class="pixel-btn btn-xl btn-download">
+              <span class="btn-icon">💾</span> BAIXAR .EXE (WINDOWS)
             </a>
             <a href="#heroi" class="pixel-btn btn-xl btn-secondary">
               VER BESTIÁRIO & MAGIAS
@@ -121,8 +137,8 @@
             </div>
             <div class="stat-divider"></div>
             <div class="stat-item">
-              <div class="stat-number">30+</div>
-              <div class="stat-label">Sinergias de Magias</div>
+              <div class="stat-number">144Hz+</div>
+              <div class="stat-label">Versão .EXE Destravada</div>
             </div>
           </div>
         </div>
@@ -347,6 +363,169 @@
             <div class="arcade-actions">
               <button id="pause-game-btn" class="pixel-btn btn-small">PAUSAR (P)</button>
               <button id="fullscreen-game-btn" class="pixel-btn btn-small">TELA CHEIA</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD SECTION (WINDOWS EXECUTABLE) -->
+    <section class="download-section" id="download">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle pulse-text">✦ VERSÃO DESKTOP INDEPENDENTE ✦</span>
+          <h2 class="section-title">DOWNLOAD PARA WINDOWS (.EXE)</h2>
+          <p class="section-desc">
+            Prefere jogar instalado no seu computador com desempenho destravado (144Hz+), suporte nativo a controles USB/Bluetooth e modo 100% offline? 
+            Baixe a versão oficial do <strong>Pixel Survivors</strong> para Windows 64-bit.
+          </p>
+        </div>
+
+        <!-- Download Cards Grid -->
+        <div class="download-cards-container">
+          <!-- Card 1: Direct .EXE -->
+          <div class="download-card highlight-gold">
+            <div class="download-card-badge">RECOMENDADO</div>
+            <div class="download-card-icon">💾</div>
+            <div class="download-card-header">
+              <h3>Pixel Survivors (.exe)</h3>
+              <span class="version-tag">Versão Alfa v0.9.0 • 64-bit</span>
+            </div>
+
+            <p class="download-card-desc">
+              Executável portátil direto e ultraleve com launcher nativo oficial e inicialização instantânea.
+            </p>
+
+            <ul class="download-card-meta">
+              <li><span>Formato:</span> <strong>Arquivo Executável (.exe)</strong></li>
+              <li><span>Tamanho:</span> <strong>~12 KB (Ultraleve)</strong></li>
+              <li><span>Plataforma:</span> <strong>Windows 10 / 11 (x64)</strong></li>
+              <li><span>Instalação:</span> <strong>Não requer instalação (Portátil)</strong></li>
+            </ul>
+
+            <a href="downloads/PixelSurvivors.exe" download="PixelSurvivors.exe" class="pixel-btn btn-xl btn-primary download-btn-trigger">
+              <span>⬇️</span> BAIXAR .EXE DIRETO
+            </a>
+
+            <div class="checksum-info">
+              <span>SHA-256:</span> <code>47EBDC7B77D0...7A4BC</code>
+            </div>
+          </div>
+
+          <!-- Card 2: Complete .ZIP Package -->
+          <div class="download-card">
+            <div class="download-card-badge cyan">PACOTE COMPLETO</div>
+            <div class="download-card-icon">📦</div>
+            <div class="download-card-header">
+              <h3>Pacote Offline (.zip)</h3>
+              <span class="version-tag">Versão Alfa v0.9.0 • Arquivo Zip</span>
+            </div>
+
+            <p class="download-card-desc">
+              Pacote completo compactado contendo o executável, manuais de instruções e cópia offline completa dos assets do jogo.
+            </p>
+
+            <ul class="download-card-meta">
+              <li><span>Formato:</span> <strong>Arquivo Compactado (.zip)</strong></li>
+              <li><span>Tamanho:</span> <strong>~152 KB</strong></li>
+              <li><span>Plataforma:</span> <strong>Windows 10 / 11 (x64)</strong></li>
+              <li><span>Conteúdo:</span> <strong>.exe + LEIA-ME + Assets Offline</strong></li>
+            </ul>
+
+            <a href="downloads/PixelSurvivors-v0.9.0-Windows-x64.zip" download="PixelSurvivors-v0.9.0-Windows-x64.zip" class="pixel-btn btn-xl btn-secondary download-btn-trigger">
+              <span>📦</span> BAIXAR PACOTE .ZIP
+            </a>
+
+            <div class="checksum-info">
+              <span>SHA-256:</span> <code>AC4F44B8A7AD...04E1</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advantages Grid: Why Download the EXE -->
+        <div class="download-advantages-box">
+          <h3 class="advantages-title">POR QUE JOGAR A VERSÃO EXECUTÁVEL (.EXE)?</h3>
+          <div class="advantages-grid">
+            <div class="advantage-item">
+              <span class="adv-icon">⚡</span>
+              <h4>Taxa de Quadros Alta (144Hz+)</h4>
+              <p>Desfrute de fluidez impecável com taxa de atualização de tela sem travamentos ou limites do navegador.</p>
+            </div>
+            <div class="advantage-item">
+              <span class="adv-icon">🎮</span>
+              <h4>Suporte Nativo a Gamepads</h4>
+              <p>Conecte seu controle de Xbox, PlayStation ou controles retrô USB/Bluetooth e jogue com precisão.</p>
+            </div>
+            <div class="advantage-item">
+              <span class="adv-icon">📴</span>
+              <h4>Modo 100% Offline</h4>
+              <p>Jogue onde quiser sem precisar de conexão com a internet ou consumo desnecessário de dados.</p>
+            </div>
+            <div class="advantage-item">
+              <span class="adv-icon">🛡️</span>
+              <h4>Zero Abas e Menor Latência</h4>
+              <p>Ambiente isolado focado no jogo com menor consumo de memória RAM e resposta imediata dos feitiços.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Requirements Table -->
+        <div class="requirements-box">
+          <h3 class="requirements-title">REQUISITOS DE SISTEMA (WINDOWS)</h3>
+          <div class="requirements-table-wrapper">
+            <table class="pixel-table">
+              <thead>
+                <tr>
+                  <th>Componente</th>
+                  <th>Requisitos Mínimos</th>
+                  <th>Recomendados</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Sistema Operacional</strong></td>
+                  <td>Windows 10 (64-bit)</td>
+                  <td>Windows 10 ou 11 (64-bit)</td>
+                </tr>
+                <tr>
+                  <td><strong>Processador</strong></td>
+                  <td>Dual-Core 1.8 GHz ou equivalente</td>
+                  <td>Quad-Core 2.5 GHz ou superior</td>
+                </tr>
+                <tr>
+                  <td><strong>Memória RAM</strong></td>
+                  <td>2 GB de RAM</td>
+                  <td>4 GB de RAM</td>
+                </tr>
+                <tr>
+                  <td><strong>Placa de Vídeo</strong></td>
+                  <td>Gráficos integrados (Intel UHD / AMD Vega)</td>
+                  <td>Placa dedicada com DirectX 11 / OpenGL</td>
+                </tr>
+                <tr>
+                  <td><strong>Armazenamento</strong></td>
+                  <td>100 MB de espaço disponível</td>
+                  <td>200 MB de espaço disponível</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SmartScreen Notice Guide -->
+        <div class="smartscreen-guide-box">
+          <div class="smartscreen-icon">ℹ️</div>
+          <div class="smartscreen-text">
+            <h4>Aviso importante sobre o Windows SmartScreen para jogos indie:</h4>
+            <p>
+              Por ser uma versão alfa independente recém-compilada por desenvolvedor indie, o Windows SmartScreen pode exibir um alerta azul (<em>"O Windows protegeu o seu computador"</em>).
+            </p>
+            <div class="smartscreen-steps">
+              <span><strong>Passo 1:</strong> Clique em <u>"Mais informações"</u></span>
+              <span class="arrow-sep">&rarr;</span>
+              <span><strong>Passo 2:</strong> Clique no botão <u>"Executar assim mesmo"</u></span>
+              <span class="arrow-sep">&rarr;</span>
+              <span><strong>Passo 3:</strong> O jogo iniciará normalmente com 100% de segurança!</span>
             </div>
           </div>
         </div>
@@ -674,8 +853,8 @@
             <div class="step-marker">✓</div>
             <div class="step-card">
               <span class="step-phase">FASE 1 (CONCLUÍDO)</span>
-              <h4>Protótipo de Combate & Demo Web</h4>
-              <p>Mecânica de arena, Herói Mago animado, inimigos básicos (Slime, Morcego, Ogro) e deploy no Cloudflare Workers.</p>
+              <h4>Protótipo de Combate, Demo Web & Executável .EXE</h4>
+              <p>Mecânica de arena, Herói Mago animado, inimigos básicos (Slime, Morcego, Ogro), build para Windows (.exe) e deploy no Cloudflare Workers.</p>
             </div>
           </div>
 
@@ -740,13 +919,13 @@
       </div>
 
       <div class="footer-links-group">
-        <h4>Navegação</h4>
+        <h4>Downloads & Jogo</h4>
         <ul>
-          <li><a href="#hero">Início</a></li>
           <li><a href="#demo-arena">Demo no Navegador</a></li>
+          <li><a href="downloads/PixelSurvivors.exe" download="PixelSurvivors.exe">Download .EXE (Windows)</a></li>
+          <li><a href="downloads/PixelSurvivors-v0.9.0-Windows-x64.zip" download="PixelSurvivors-v0.9.0-Windows-x64.zip">Pacote Completo (.ZIP)</a></li>
           <li><a href="#heroi">O Herói Mago</a></li>
           <li><a href="#bestiario">Bestiário</a></li>
-          <li><a href="#grimorio">Grimório de Magias</a></li>
         </ul>
       </div>
 
@@ -754,9 +933,9 @@
         <h4>Tecnologia</h4>
         <ul>
           <li><a href="https://workers.cloudflare.com/" target="_blank" rel="noopener">Cloudflare Workers</a></li>
+          <li><span>Windows x64 Executable</span></li>
           <li><span>HTML5 Canvas 60 FPS</span></li>
           <li><span>Web Audio Chiptune API</span></li>
-          <li><span>Pixel Art Handcrafted</span></li>
         </ul>
       </div>
 

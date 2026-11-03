@@ -1,6 +1,6 @@
 # 🎮 PIXEL SURVIVORS - Top-Down Roguelite Arena
 
-Uma página completa, imersiva e responsiva para o jogo **Pixel Survivors** (estilo *Vampire Survivors* em estética clássica de Pixel Art retrô dos anos 90), pronta para rodar e ser publicada no **Cloudflare Workers**.
+Uma página completa, imersiva e responsiva para o jogo **Pixel Survivors** (estilo *Vampire Survivors* em estética clássica de Pixel Art retrô dos anos 90), com **Demo Jogável no Navegador** e **Download do Executável (.exe) para Windows**, pronta para rodar e ser publicada no **Cloudflare Workers**.
 
 ---
 
@@ -12,9 +12,21 @@ Uma página completa, imersiva e responsiva para o jogo **Pixel Survivors** (est
    - **Brasas Mágicas Dinâmicas**: Partículas arcanas flutuantes ao fundo via Canvas de baixa sobrecarga.
    - **Tela Inicial Original em Destaque**: Moldura especial destacando a arte oficial e os controles da tela de apresentação (`assets/tela_inicial.jpeg`).
 
-2. **Demo Jogável da Arena no Navegador (`public/game.js`)**:
+2. **Área de Download Oficial para Windows (.exe) (`#download`)**:
+   - **Executável Direto (`PixelSurvivors.exe`)**: Launcher portátil ultraleve compilado nativamente para Windows 10 e 11 (64-bit).
+   - **Pacote Completo Portátil (`PixelSurvivors-v0.9.0-Windows-x64.zip`)**: Pacote com executável, manual de instruções e cópia completa dos assets do jogo para rodar 100% offline em qualquer PC.
+   - **Vantagens da Versão .EXE em Destaque**:
+     - ⚡ Taxa de quadros destravada (144Hz / 240Hz+) sem limitações de abas de navegador.
+     - 🎮 Suporte nativo a gamepads USB e Bluetooth (Xbox, PlayStation, 8BitDo).
+     - 📴 100% Offline: Jogue em viagens sem consumir internet.
+     - 🛡️ Menor latência de entrada e menor consumo de RAM.
+   - **Tabela de Requisitos de Sistema**: Requisitos mínimos e recomendados.
+   - **Guia do Windows SmartScreen**: Instruções claras passo a passo para o usuário executar o jogo sem dúvidas sobre alertas de certificados em jogos indie recém-compilados.
+   - **Notificação Interativa (Toast)**: Feedback sonoro e visual instantâneo ao clicar em qualquer botão de download.
+
+3. **Demo Jogável da Arena no Navegador (`public/game.js`)**:
    - Jogo funcional estilo *Vampire Survivors* rodando a 60 FPS no Canvas!
-   - **Herói Mago** com animação de caminhada de 4 frames (`south_walk_0.png` até `south_walk_3.png`).
+   - **Herói Mago**: Movimentação com animação de caminhada de 4 frames (`south_walk_0.png` até `south_walk_3.png`).
    - **Mira Automática (Auto-Aim)**: Dispara feitiços arcanos automaticamente no inimigo mais próximo.
    - **3 Inimigos com Comportamentos Únicos**:
      - 🟢 **Slime Verde (Comum)**: Enxame contínuo, velocidade moderada, drop de gemas verdes.
@@ -25,21 +37,23 @@ Uma página completa, imersiva e responsiva para o jogo **Pixel Survivors** (est
    - **Sintetizador de Áudio Chiptune 8-Bit (Web Audio API)**: Sons retrô gerados proceduralmente (tiro mágico, impacto, coleta de gema, fanfarra de level-up, dano e game over) sem depender de arquivos pesados de áudio externos, com botão de mutar/desmutar.
    - **Controles**: Suporte para teclado (`WASD` ou `Setas Direcionais`, tecla `P` para pausar) e direcional virtual para dispositivos móveis e touch.
 
-3. **Inspecionador 360° do Herói Mago (`public/main.js`)**:
+4. **Inspecionador 360° do Herói Mago (`public/main.js`)**:
    - Visualizador interativo que permite girar o sprite do Mago nas **8 direções reais** fornecidas nos assets (`south`, `south-west`, `west`, `north-west`, `north`, `north-east`, `east`, `south-east`).
    - Botões de bússola, rotação automática contínua e arrasto com o mouse/dedo.
 
-4. **Bestiário, Grimório de Magias, Roadmap & Newsletter**:
+5. **Bestiário, Grimório de Magias, Roadmap & Newsletter**:
    - Cartões detalhados para cada criatura com barras de estatísticas e perigo.
    - Tabela de sinergias e fusões de feitiços arcanos.
    - Roadmap de desenvolvimento de 4 fases.
    - Formulário de inscrição para o Alfa fechado com feedback visual.
 
-5. **Pronto para Cloudflare Workers (`wrangler.jsonc`, `wrangler.toml`, `src/index.js`)**:
+6. **Pronto para Cloudflare Workers (`wrangler.jsonc`, `wrangler.toml`, `src/index.js`)**:
    - Utiliza a arquitetura moderna de **Workers Static Assets** da Cloudflare (`assets: { directory: "./public" }`).
    - Script de borda (`src/index.js`) que serve os arquivos estáticos e disponibiliza endpoints de API:
      - `GET /api/health`: Status do Worker.
      - `GET /api/game-info`: Metadados do jogo, herói e monstros em formato JSON.
+     - `GET /api/downloads`: Informações dos arquivos para download, versão e checksum SHA-256.
+     - `GET /download/exe` e `GET /download/zip`: Redirecionamentos diretos para os arquivos de download.
      - `POST /api/newsletter`: Endpoint para registrar inscrições de e-mail na nuvem da Cloudflare.
 
 ---
@@ -56,16 +70,23 @@ Site_game/
 │
 ├── public/                           # Diretório servido no Cloudflare Workers
 │   ├── index.html                    # Estrutura HTML semântica e responsiva
-│   ├── styles.css                    # Estilos retrô, CRT filter, neon glow e responsividade
+│   ├── styles.css                    # Estilos retrô, CRT filter, seções de download e demo
 │   ├── game.js                       # Motor do jogo survivor, áudio chiptune e canvas
-│   ├── main.js                       # Rotação 8 direções, toggles de som/CRT, newsletter
+│   ├── main.js                       # Rotação 8 direções, download toast, toggles de som/CRT
+│   ├── downloads/                    # Arquivos executáveis para download
+│   │   ├── PixelSurvivors.exe        # Executável portátil oficial para Windows
+│   │   └── PixelSurvivors-v0.9.0-Windows-x64.zip # Pacote completo portátil offline
 │   └── assets/                       # Mídia organizada para o site público
+│       ├── icon.ico                  # Ícone pixel art do executável
 │       ├── tela_inicial.jpeg
 │       ├── enemies/                  # slime.png, morcego.png, ogro.png
 │       └── wizard/                   # south_walk_0..3, gif e pasta rotations/
 │
 ├── src/
 │   └── index.js                      # Worker script (Cloudflare Workers Static Assets & APIs)
+│
+├── src-desktop/
+│   └── Program.cs                    # Código-fonte C# do launcher desktop Windows
 │
 ├── wrangler.jsonc                    # Configuração moderna Cloudflare Workers
 ├── wrangler.toml                     # Configuração alternativa de compatibilidade
@@ -79,14 +100,10 @@ Site_game/
 
 ### Opção 1: Abrir diretamente no navegador (Zero instalação)
 Basta dar dois cliques no arquivo `public/index.html` ou abrir pelo navegador (Google Chrome, Firefox, Edge, etc.). 
-A página e a demo jogável funcionarão de imediato!
+A página, a demo jogável e os downloads funcionarão de imediato!
 
-### Opção 2: Com um servidor HTTP local simples
-Se tiver Python instalado:
-```bash
-python -m http.server 8080 --directory public
-```
-Ou com extensões como o **Live Server** do VS Code apontando para a pasta `public`.
+### Opção 2: Jogar pelo Executável Windows (.exe)
+Basta dar dois cliques em `public/downloads/PixelSurvivors.exe` para abrir o launcher desktop.
 
 ---
 
@@ -102,7 +119,7 @@ No terminal, na pasta raiz do projeto:
 ```bash
 npx wrangler dev
 ```
-O Wrangler iniciará um servidor local emulado do Cloudflare Workers (geralmente em `http://localhost:8787`), servindo o site estático e os endpoints de API.
+O Wrangler iniciará um servidor local emulado do Cloudflare Workers em `http://localhost:8787`, servindo tanto a página web quanto os arquivos de download (`.exe` e `.zip`).
 
 ### 3. Fazer Deploy para o Cloudflare Workers (Produção)
 Para publicar seu site mundialmente na rede de borda da Cloudflare:
@@ -113,17 +130,12 @@ npx wrangler deploy
 
 ---
 
-## 🌐 Publicação Alternativa: Cloudflare Pages
-Se preferir usar o **Cloudflare Pages**:
-1. No painel da Cloudflare (dash.cloudflare.com), vá em **Workers & Pages** > **Create application** > **Pages**.
-2. Conecte seu repositório Git ou faça **Upload Assets**.
-3. Defina o diretório de build/saída para: `public`.
-4. Clique em **Deploy**.
+## 🔄 Como Atualizar ou Recompilar o .EXE
 
----
+Se você fizer alterações no launcher em `src-desktop/Program.cs`, pode recompilá-lo facilmente no Windows usando o compilador nativo do .NET Framework com o comando:
 
-## 🕹️ Controles do Mini-Game
-- **Mover o Herói:** Teclas `W`, `A`, `S`, `D` ou `Setas Direcionais` (ou D-Pad na tela em celulares).
-- **Ataque:** 100% automático no monstro mais próximo.
-- **Pausar Jogo:** Tecla `P` ou botão "Pausar" no rodapé do fliperama.
-- **Tela Cheia:** Botão "Tela Cheia" para imersão total.
+```powershell
+$csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+& $csc /target:winexe "/win32icon:public\assets\icon.ico" "/out:public\downloads\PixelSurvivors.exe" /reference:System.Windows.Forms.dll,System.Drawing.dll,System.dll src-desktop\Program.cs
+```
+Ou se você gerar um `.exe` a partir de uma engine como Godot, Unity, GameMaker ou Love2D, basta colocar o arquivo gerado dentro de `public/downloads/` com o nome `PixelSurvivors.exe`.

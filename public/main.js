@@ -1,6 +1,6 @@
 /**
  * PIXEL SURVIVORS - Main Page Interactivity
- * Handles CRT filter, 8-directional character spinner, ambient particles, and audio controls.
+ * Handles CRT filter, 8-directional character spinner, ambient particles, download feedback, and audio controls.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -286,6 +286,49 @@ document.addEventListener('DOMContentLoaded', () => {
         newsStatus.style.color = 'var(--color-green)';
         newsEmail.value = '';
       }
+    });
+  }
+
+  // --- 7. Download Toast Feedback ---
+  const downloadToast = document.getElementById('download-toast');
+  const closeToastBtn = document.getElementById('close-toast-btn');
+  const downloadBtns = document.querySelectorAll('.download-btn-trigger');
+  let toastTimeout = null;
+
+  function showDownloadToast(filename) {
+    if (!downloadToast) return;
+    if (window.gameSound) {
+      window.gameSound.init();
+      window.gameSound.playGem();
+    }
+    const toastTitle = document.getElementById('toast-title');
+    const toastMsg = document.getElementById('toast-message');
+
+    if (toastTitle) toastTitle.textContent = 'Download Iniciado!';
+    if (toastMsg) {
+      toastMsg.textContent = filename.includes('.zip')
+        ? 'Baixando pacote completo portátil (.zip). Extraia e jogue!'
+        : 'Baixando executável oficial (.exe). Bom jogo na arena!';
+    }
+
+    downloadToast.classList.remove('hidden');
+
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      downloadToast.classList.add('hidden');
+    }, 6000);
+  }
+
+  downloadBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const href = btn.getAttribute('href') || '';
+      showDownloadToast(href);
+    });
+  });
+
+  if (closeToastBtn && downloadToast) {
+    closeToastBtn.addEventListener('click', () => {
+      downloadToast.classList.add('hidden');
     });
   }
 

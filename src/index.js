@@ -94,6 +94,45 @@ export default {
       }
     }
 
+    if (url.pathname === '/api/downloads') {
+      return new Response(
+        JSON.stringify({
+          version: '0.9.0-alpha',
+          releaseDate: '2026-11-03',
+          files: [
+            {
+              name: 'PixelSurvivors.exe',
+              url: '/downloads/PixelSurvivors.exe',
+              size: '11.5 KB',
+              platform: 'Windows 10/11 (x64)',
+              sha256: '47EBDC7B77D05FEB6C333D720630D421F3507D9A4C071C0A7ECA3ED2B487A4BC'
+            },
+            {
+              name: 'PixelSurvivors-v0.9.0-Windows-x64.zip',
+              url: '/downloads/PixelSurvivors-v0.9.0-Windows-x64.zip',
+              size: '152 KB',
+              platform: 'Windows 10/11 (x64) - Pacote Portátil Completo',
+              sha256: 'AC4F44B8A7ADE4BB86F454CA02D157A8EB528E75C460D339673FF25A0F2B04E1'
+            }
+          ]
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
+        }
+      );
+    }
+
+    if (url.pathname === '/download/exe') {
+      return Response.redirect(new URL('/downloads/PixelSurvivors.exe', request.url), 302);
+    }
+
+    if (url.pathname === '/download/zip') {
+      return Response.redirect(new URL('/downloads/PixelSurvivors-v0.9.0-Windows-x64.zip', request.url), 302);
+    }
+
     // --- Static Asset Serving via Cloudflare Workers Static Assets binding ---
     if (env.ASSETS) {
       return env.ASSETS.fetch(request);

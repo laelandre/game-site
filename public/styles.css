@@ -181,9 +181,19 @@ body:not(.crt-active) .crt-scanlines {
   color: var(--color-cyan);
 }
 
+.btn-download {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #ffffff;
+  border-color: #34d399;
+}
+.btn-download:hover {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #064e3b;
+}
+
 .btn-xl {
-  padding: 1rem 2rem;
-  font-size: 0.95rem;
+  padding: 1rem 1.8rem;
+  font-size: 0.9rem;
 }
 
 .btn-small {
@@ -219,6 +229,17 @@ body:not(.crt-active) .crt-scanlines {
   background: var(--color-red);
   color: #fff;
   border: 1px solid #000;
+}
+
+.badge-exe {
+  display: inline-block;
+  font-family: var(--font-pixel-heading);
+  font-size: 0.55rem;
+  padding: 0.15rem 0.35rem;
+  background: #10b981;
+  color: #022c22;
+  border: 1px solid #34d399;
+  margin-right: 4px;
 }
 
 .blink {
@@ -335,6 +356,13 @@ body:not(.crt-active) .crt-scanlines {
 .main-nav a.nav-highlight {
   color: var(--color-cyan);
   border-bottom-color: var(--color-cyan);
+}
+.main-nav a.nav-download {
+  color: #34d399;
+}
+.main-nav a.nav-download:hover {
+  color: #6ee7b7;
+  border-bottom-color: #34d399;
 }
 
 .nav-actions {
@@ -462,7 +490,7 @@ section {
 
 .hero-actions {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   margin-bottom: 3rem;
   flex-wrap: wrap;
 }
@@ -1022,6 +1050,318 @@ section {
 .arcade-actions {
   display: flex;
   gap: 0.5rem;
+}
+
+/* ==========================================================================
+   DOWNLOAD SECTION (WINDOWS EXECUTABLE)
+   ========================================================================== */
+.download-section {
+  background: linear-gradient(180deg, #090e1a 0%, #060911 100%);
+  border-top: 3px solid #1e293b;
+  border-bottom: 3px solid #1e293b;
+  position: relative;
+}
+
+.download-cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: 980px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.download-card {
+  background: var(--bg-card);
+  border: 4px solid #293854;
+  box-shadow: 8px 8px 0px #000;
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.download-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 10px 10px 0px #000;
+}
+
+.download-card.highlight-gold {
+  border-color: var(--color-primary);
+  box-shadow: 8px 8px 0px #000, 0 0 25px rgba(250, 204, 21, 0.25);
+}
+.download-card.highlight-gold:hover {
+  box-shadow: 10px 10px 0px #000, 0 0 35px rgba(250, 204, 21, 0.4);
+}
+
+.download-card-badge {
+  position: absolute;
+  top: -14px;
+  right: 20px;
+  background: var(--color-primary);
+  color: #0b0f19;
+  font-family: var(--font-pixel-heading);
+  font-size: 0.6rem;
+  padding: 0.35rem 0.75rem;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #000;
+}
+.download-card-badge.cyan {
+  background: var(--color-cyan);
+  color: #000;
+}
+
+.download-card-icon {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+}
+
+.download-card-header h3 {
+  font-family: var(--font-pixel-heading);
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.version-tag {
+  font-family: var(--font-pixel-ui);
+  font-size: 0.75rem;
+  color: var(--color-cyan);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.download-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.download-card-meta {
+  list-style: none;
+  font-family: var(--font-pixel-ui);
+  font-size: 0.75rem;
+  margin-bottom: 1.75rem;
+  background: #0a0d17;
+  border: 1px solid #1e293b;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.download-card-meta li {
+  display: flex;
+  justify-content: space-between;
+}
+.download-card-meta span {
+  color: var(--text-dim);
+}
+.download-card-meta strong {
+  color: #f1f5f9;
+}
+
+.checksum-info {
+  margin-top: 1rem;
+  font-family: var(--font-pixel-ui);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+.checksum-info code {
+  color: var(--color-cyan);
+  background: #090e18;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid #1e293b;
+  display: inline-block;
+  margin-left: 4px;
+}
+
+/* Download Advantages Grid */
+.download-advantages-box {
+  background: #0d121f;
+  border: 3px solid #1e293b;
+  box-shadow: 6px 6px 0px #000;
+  padding: 2.5rem;
+  max-width: 980px;
+  margin: 0 auto 3rem auto;
+}
+
+.advantages-title {
+  font-family: var(--font-pixel-heading);
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.advantage-item {
+  text-align: center;
+}
+.adv-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.advantage-item h4 {
+  font-family: var(--font-pixel-heading);
+  font-size: 0.75rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.advantage-item p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* System Requirements Table */
+.requirements-box {
+  max-width: 980px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.requirements-title {
+  font-family: var(--font-pixel-heading);
+  font-size: 1rem;
+  color: var(--color-cyan);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.requirements-table-wrapper {
+  overflow-x: auto;
+  border: 3px solid #23304a;
+  box-shadow: 6px 6px 0px #000;
+}
+
+.pixel-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0d121f;
+  font-family: var(--font-pixel-ui);
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.pixel-table th {
+  background: #182238;
+  color: var(--color-primary);
+  padding: 0.85rem 1.25rem;
+  border-bottom: 2px solid #283756;
+  font-family: var(--font-pixel-heading);
+  font-size: 0.75rem;
+}
+
+.pixel-table td {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #1a243a;
+  color: var(--text-muted);
+}
+.pixel-table tr:hover {
+  background: #131c30;
+}
+.pixel-table tr:last-child td {
+  border-bottom: none;
+}
+.pixel-table strong {
+  color: #f1f5f9;
+}
+
+/* SmartScreen Guide Box */
+.smartscreen-guide-box {
+  background: #0c1527;
+  border: 3px dashed #2563eb;
+  padding: 1.5rem 1.75rem;
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+.smartscreen-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+.smartscreen-text h4 {
+  font-family: var(--font-pixel-heading);
+  font-size: 0.8rem;
+  color: #93c5fd;
+  margin-bottom: 0.4rem;
+}
+.smartscreen-text p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+.smartscreen-steps {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-pixel-ui);
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  flex-wrap: wrap;
+}
+.smartscreen-steps strong {
+  color: var(--color-primary);
+}
+.arrow-sep {
+  color: #60a5fa;
+}
+
+/* Download Toast */
+.download-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  border: 3px solid var(--color-green);
+  box-shadow: 6px 6px 0px #000, 0 0 20px var(--color-green-glow);
+  padding: 1rem 1.25rem;
+  z-index: 10000;
+  max-width: 380px;
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.3s ease;
+}
+.download-toast.hidden {
+  transform: translateY(100px);
+  opacity: 0;
+  pointer-events: none;
+}
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.toast-icon {
+  font-size: 2rem;
+}
+.toast-text strong {
+  font-family: var(--font-pixel-heading);
+  font-size: 0.8rem;
+  color: var(--color-green);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.toast-text p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.toast-close {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-left: auto;
+}
+.toast-close:hover {
+  color: #fff;
 }
 
 /* ==========================================================================
@@ -1737,6 +2077,12 @@ section {
   .features-grid {
     grid-template-columns: 1fr 1fr;
   }
+  .download-cards-container {
+    grid-template-columns: 1fr;
+  }
+  .advantages-grid {
+    grid-template-columns: 1fr 1fr;
+  }
   .footer-content {
     grid-template-columns: 1fr 1fr;
   }
@@ -1776,6 +2122,9 @@ section {
     grid-template-columns: 1fr;
   }
   .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .advantages-grid {
     grid-template-columns: 1fr;
   }
   .footer-content {
